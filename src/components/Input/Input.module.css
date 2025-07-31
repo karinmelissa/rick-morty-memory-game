@@ -1,0 +1,56 @@
+.container {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.label {
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+  color: #313D49;
+}
+
+.field {
+  padding: 0.5rem;
+  border-radius: 2px;
+  border: 2px solid #212C31;
+  color:#212C31;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+  background-color: transparent;
+}
+
+.field:focus {
+  outline: none;
+  border-color: rgb(56, 41, 135);
+}
+
+.error {
+  border-color: red;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+}
+
+.showPasswordBtn {
+  position: relative;
+  top: -35px;
+  left: 270px;
+  width: fit-content;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  color: #212C31;
+}
+.showPasswordBtn:hover {
+  color: #000;
+}
+

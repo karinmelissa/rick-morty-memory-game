@@ -1,16 +1,25 @@
 .container {
   max-width: 300px;
   margin: auto;
-  padding: 1rem;
-}
-
-.form input {
-  display: block;
-  margin-bottom: 0.5rem;
-  width: 100%;
-  padding: 0.5rem;
+  padding: 50px;
+  background-color: #FFFAC2;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .error {
   color: red;
+}
+
+.logo{
+  max-width: 300px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 24px;
+  }
 }
