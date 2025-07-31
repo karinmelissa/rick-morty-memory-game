@@ -1,0 +1,25 @@
+.header{
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    align-items: center;
+}
+
+.logo{
+    max-width: 300px;
+}
+
+.badge{
+    background-color: #D8E054;
+    text-align: center;
+    border-radius:999px;
+    font-size: 20px;
+    padding: 8px 16px;
+    width: fit-content;
+}
+
+@media (max-width: 600px) {
+  .logo {
+    max-width: 300px;
+  }
+}

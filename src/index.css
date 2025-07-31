@@ -16,26 +16,28 @@ html, body, #root {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Root app layout */
 #root {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Centrado del contenido principal */
 .content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100dvh; /* Mejor soporte en móviles */
+  min-height: 100dvh;
   width: 100%;
   padding: 1rem;
   box-sizing: border-box;
 }
 
-/* Tipografía y enlaces */
+.layout{
+  justify-content: flex-start;
+}
+
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;

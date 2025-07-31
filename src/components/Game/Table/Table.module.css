@@ -1,0 +1,39 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    gap:8px;
+    background-color: #FFFAC2;
+    border-radius: 16px 16px 0px 0px;
+    width: 80%;
+    padding:  0 1.5rem 1rem 1.5rem;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.cards{
+      display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.card {
+  width: 100%;
+  height: 160px;
+  border: 2px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.back {
+  font-size: 2rem;
+  color: #999;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+}
