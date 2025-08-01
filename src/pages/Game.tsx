@@ -3,7 +3,7 @@ import { shuffleCards } from '@/utils/utils';
 import { Header } from '@/components/Header/Header';
 import { fetchRandomCharacters} from '@/services/rickAndMortyApi';
 import { MemoryCard } from '@/types/character/type';
-import { Table } from '@/components/Game/Table/Table';
+import { Table } from '@/components/Game/Table';
 
 export const Game = () => {
   const [cards, setCards] = useState<MemoryCard[]>([]);

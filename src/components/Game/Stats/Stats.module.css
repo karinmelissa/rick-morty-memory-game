@@ -1,0 +1,10 @@
+.stats {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    p {
+        margin: 0;
+        width: fit-content;
+    }
+}

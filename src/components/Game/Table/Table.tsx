@@ -3,6 +3,8 @@ import { MemoryCard } from "@/types/character/type";
 import styles from './Table.module.css';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Game/Card';
+import { Deck } from '@/components/Game/Deck'
+import { Stats } from '../Stats';
 
 interface TableProps {
     characters: MemoryCard[];
@@ -17,7 +19,8 @@ export const Table = ({ characters }: TableProps) => {
     const [matches, setMatches] = useState(0);
     const [selectedCards, setSelectedCards] = useState<MemoryCard[]>([]);
     const [matchedIds, setMatchedIds] = useState<string[]>([]);
-
+    const [initialReveal, setInitialReveal] = useState(true);
+    const [removedIds, setRemovedIds] = useState<string[]>([]);
 
     const handleStart = () => {
         setGameStarted(true);
@@ -27,34 +30,44 @@ export const Table = ({ characters }: TableProps) => {
         setMatches(0);
         setSelectedCards([]);
         setMatchedIds([]);
+        setInitialReveal(true);
+        setTimeout(() => {
+            setInitialReveal(false);
+        }, 3000);
+
     };
 
     const handleCardClick = (card: MemoryCard) => {
-  const totalPairs = characters.length / 2;
+        const totalPairs = characters.length / 2;
 
-  if (matches === totalPairs) return;
+        if (matches === totalPairs) return;
 
-  if (
-    selectedCards.length === 2 ||
-    selectedCards.find((c) => c.uniqueId === card.uniqueId)
-  )
-    return;
+        if (
+            selectedCards.length === 2 ||
+            selectedCards.find((c) => c.uniqueId === card.uniqueId)
+        )
+            return;
 
-  const newSelection = [...selectedCards, card];
-  setSelectedCards(newSelection);
+        const newSelection = [...selectedCards, card];
+        setSelectedCards(newSelection);
 
-  if (newSelection.length === 2) {
-    setTurns((prev) => prev + 1);
-    const [first, second] = newSelection;
-    if (first.id === second.id) {
-      setMatches((prev) => prev + 1);
-      setMatchedIds((prev) => [...prev, first.uniqueId, second.uniqueId]);
-    }
-    setTimeout(() => {
-      setSelectedCards([]);
-    }, 1000);
-  }
-};
+        if (newSelection.length === 2) {
+            setTurns((prev) => prev + 1);
+            const [first, second] = newSelection;
+            if (first.id === second.id) {
+                setMatches((prev) => prev + 1);
+                setMatchedIds((prev) => [...prev, first.uniqueId, second.uniqueId]);
+                setTimeout(() => {
+                    setRemovedIds((prev) => [...prev, first.uniqueId, second.uniqueId]);
+                    setSelectedCards([]);
+                }, 1000);
+            } else {
+                setTimeout(() => {
+                    setSelectedCards([]);
+                }, 1000);
+            }
+        }
+    };
 
 
     useEffect(() => {
@@ -83,31 +96,16 @@ export const Table = ({ characters }: TableProps) => {
                 </div>
             ) : (
                 <>
-                    <div className={styles.stats}>
-                        <p>⏱️ Tiempo: {time}s</p>
-                        <p>🎯 Aciertos: {matches}</p>
-                        <p>🔁 Turnos: {turns}</p>
-                    </div>
+                    <Stats time={time} turns={turns} matches={matches} />
 
-                    <div className={styles.cards}>
-                        {characters.map((card) => {
-                            const isFlipped =
-                                !!selectedCards.find((c) => c.uniqueId === card.uniqueId) ||
-                                matchedIds.includes(card.uniqueId);
-
-                            return (
-                                <Card
-                                    key={card.uniqueId}
-                                    image={card.image}
-                                    name={card.name}
-                                    status={card.status}
-                                    specie={card.species}
-                                    flipped={!isFlipped}
-                                    onClick={() => handleCardClick(card)}
-                                />
-                            );
-                        })}
-                    </div>
+                    <Deck
+                        cards={characters}
+                        matchedIds={matchedIds}
+                        selectedCards={selectedCards}
+                        onCardClick={handleCardClick}
+                        initialReveal={initialReveal}
+                         removedIds={removedIds}
+                    />
                 </>
             )}
         </div>

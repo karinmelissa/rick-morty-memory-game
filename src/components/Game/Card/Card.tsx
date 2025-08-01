@@ -8,12 +8,13 @@ interface CardProps {
   status: string;
   specie: string;
   flipped: boolean;
+  hidden?:boolean
   onClick: () => void;
 }
 
-export const Card = ({ image, name, status, specie, flipped, onClick }: CardProps) => {
+export const Card = ({ image, name, status, specie, flipped, hidden,onClick }: CardProps) => {
   return (
-    <div className={styles.card} onClick={onClick}>
+    <div className={`${styles.card} ${hidden? styles.hidden: ''}`} onClick={onClick}>
       <div className={`${styles.inner} ${flipped ? styles.flipped : ''}`}>
         <div className={styles.front}>
           <img src={image} alt={name} className={styles.image} />
