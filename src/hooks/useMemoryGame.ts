@@ -1,0 +1,84 @@
+import { useEffect, useState } from "react";
+import { MemoryCard } from "@/types/character/type";
+
+export function useMemoryGame(cards: MemoryCard[]) {
+const [gameStarted, setGameStarted] = useState(false);
+  const [turns, setTurns] = useState(0);
+  const [matches, setMatches] = useState(0);
+  const [selectedCards, setSelectedCards] = useState<MemoryCard[]>([]);
+  const [matchedIds, setMatchedIds] = useState<string[]>([]);
+  const [removedIds, setRemovedIds] = useState<string[]>([]);
+  const [initialReveal, setInitialReveal] = useState(true);
+  const [gameFinished, setGameFinished] = useState(false);
+  const [time, setTime] = useState(0);
+  const [timerActive, setTimerActive] = useState(false);
+
+  const startGame = () => {
+    setGameStarted(true);
+    setTurns(0);
+    setMatches(0);
+    setSelectedCards([]);
+    setMatchedIds([]);
+    setRemovedIds([]);
+    setInitialReveal(true);
+    setGameFinished(false);
+    setTimerActive(true);
+    setTimeout(() => setInitialReveal(false), 3000);
+  };
+
+  const handleCardClick = (card: MemoryCard) => {
+    const totalPairs = cards.length / 2;
+    if (gameFinished || selectedCards.length === 2 || selectedCards.find(c => c.uniqueId === card.uniqueId)) return;
+
+    const newSelection = [...selectedCards, card];
+    setSelectedCards(newSelection);
+
+    if (newSelection.length === 2) {
+      setTurns((prev) => prev + 1);
+      const [first, second] = newSelection;
+
+      if (first.id === second.id) {
+        setMatches((prev) => prev + 1);
+        setMatchedIds((prev) => [...prev, first.uniqueId, second.uniqueId]);
+
+        setTimeout(() => {
+          setRemovedIds((prev) => [...prev, first.uniqueId, second.uniqueId]);
+          setSelectedCards([]);
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          setSelectedCards([]);
+        }, 1000);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (timerActive) {
+      const interval = window.setInterval(() => setTime((prev) => prev + 1), 1000);
+      return () => clearInterval(interval);
+    }
+  }, [timerActive]);
+
+  useEffect(() => {
+    const totalPairs = cards.length / 2;
+    if (matches === totalPairs) {
+      setTimerActive(false);
+      setGameFinished(true);
+    }
+  }, [matches]);
+
+  return {
+    turns,
+    matches,
+    selectedCards,
+    matchedIds,
+    removedIds,
+    initialReveal,
+    gameFinished,
+    gameStarted,
+    time,
+    startGame,
+    handleCardClick,
+  };
+}
