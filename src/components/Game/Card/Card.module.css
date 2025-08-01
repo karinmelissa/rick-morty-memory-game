@@ -4,6 +4,7 @@
   perspective: 1000px;
   cursor: pointer;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .inner {
@@ -35,6 +36,7 @@
 }
 
 .image {
+  display: block;
   width: 100%;
   height: auto;
   max-height: 75%;
@@ -48,6 +50,8 @@
   padding-top: 8px;
   text-align: center;
   width: 100%;
+   flex-shrink: 0;
+  min-height: 60px;
 }
 
 .name {
@@ -64,10 +68,33 @@
 }
 
 .back {
-  background-color: #e4e4e4;
-  font-size: 2rem;
+  background-color: #A2F2F9;
   transform: rotateY(180deg);
   align-items: center;
   justify-content: center;
-  padding: 12px;
+}
+
+  .logo{
+    max-width: 100%;
+  }
+
+@media (max-width: 768px) {
+  .card {
+    width: 100px;
+    height: 100px;
+  }
+
+  .front,
+  .back{
+    padding: 8px;
+  }
+
+  .image {
+    max-height: 100%;
+  }
+
+  .footer {
+    display: none;
+  }
+  
 }

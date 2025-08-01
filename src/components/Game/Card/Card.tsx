@@ -1,4 +1,6 @@
 import styles from './Card.module.css';
+import cardLogo from '@/assets/back_card_image.png'
+
 
 interface CardProps {
   image: string;
@@ -21,7 +23,7 @@ export const Card = ({ image, name, status, specie, flipped, onClick }: CardProp
           </div>
         </div>
         <div className={styles.back}>
-          🧠
+          <img src={cardLogo} alt="Logo" className={styles.logo} />
         </div>
       </div>
     </div>
