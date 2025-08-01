@@ -1,6 +1,6 @@
 .card {
-  width: 212px;
-  height: 260px;
+  width: 210px;
+  height: 250px;
   perspective: 1000px;
   cursor: pointer;
   box-sizing: border-box;
@@ -46,12 +46,11 @@
 }
 
 .footer {
-  margin-top: auto;
-  padding-top: 8px;
+  margin-top: 4px;
   text-align: center;
   width: 100%;
-   flex-shrink: 0;
-  min-height: 60px;
+  flex-shrink: 0;
+  min-height: 40px;
 }
 
 .name {
@@ -64,7 +63,7 @@
 .meta {
   font-size: 0.8rem;
   color: #666;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .back {
@@ -74,9 +73,9 @@
   justify-content: center;
 }
 
-  .logo{
-    max-width: 100%;
-  }
+.logo {
+  max-width: 100%;
+}
 
 @media (max-width: 768px) {
   .card {
@@ -85,7 +84,7 @@
   }
 
   .front,
-  .back{
+  .back {
     padding: 8px;
   }
 
@@ -96,5 +95,5 @@
   .footer {
     display: none;
   }
-  
+
 }

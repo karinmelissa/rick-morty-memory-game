@@ -18,15 +18,6 @@ export const Table = ({ characters }: TableProps) => {
     const [selectedCards, setSelectedCards] = useState<MemoryCard[]>([]);
     const [matchedIds, setMatchedIds] = useState<string[]>([]);
 
-    useEffect(() => {
-        let interval: number;
-        if (timerActive) {
-            interval = window.setInterval(() => {
-                setTime(prev => prev + 1);
-            }, 1000);
-        }
-        return () => clearInterval(interval);
-    }, [timerActive]);
 
     const handleStart = () => {
         setGameStarted(true);
@@ -39,22 +30,49 @@ export const Table = ({ characters }: TableProps) => {
     };
 
     const handleCardClick = (card: MemoryCard) => {
-        if (selectedCards.length === 2 || selectedCards.find(c => c.uniqueId === card.uniqueId)) return;
-        const newSelection = [...selectedCards, card];
-        setSelectedCards(newSelection);
+  const totalPairs = characters.length / 2;
 
-        if (newSelection.length === 2) {
-            setTurns((prev) => prev + 1);
-            const [first, second] = newSelection;
-            if (first.id === second.id) {
-                setMatches((prev) => prev + 1);
-                setMatchedIds((prev) => [...prev, first.uniqueId, second.uniqueId]);
-            }
-            setTimeout(() => {
-                setSelectedCards([]);
+  if (matches === totalPairs) return;
+
+  if (
+    selectedCards.length === 2 ||
+    selectedCards.find((c) => c.uniqueId === card.uniqueId)
+  )
+    return;
+
+  const newSelection = [...selectedCards, card];
+  setSelectedCards(newSelection);
+
+  if (newSelection.length === 2) {
+    setTurns((prev) => prev + 1);
+    const [first, second] = newSelection;
+    if (first.id === second.id) {
+      setMatches((prev) => prev + 1);
+      setMatchedIds((prev) => [...prev, first.uniqueId, second.uniqueId]);
+    }
+    setTimeout(() => {
+      setSelectedCards([]);
+    }, 1000);
+  }
+};
+
+
+    useEffect(() => {
+        let interval: number;
+        if (timerActive) {
+            interval = window.setInterval(() => {
+                setTime(prev => prev + 1);
             }, 1000);
         }
-    };
+        return () => clearInterval(interval);
+    }, [timerActive]);
+
+    useEffect(() => {
+        const totalPairs = characters.length / 2;
+        if (matches === totalPairs) {
+            setTimerActive(false);
+        }
+    }, [matches, characters]);
 
     return (
         <div className={styles.container}>
@@ -74,7 +92,7 @@ export const Table = ({ characters }: TableProps) => {
                     <div className={styles.cards}>
                         {characters.map((card) => {
                             const isFlipped =
-                                selectedCards.find((c) => c.uniqueId === card.uniqueId) ||
+                                !!selectedCards.find((c) => c.uniqueId === card.uniqueId) ||
                                 matchedIds.includes(card.uniqueId);
 
                             return (
@@ -84,7 +102,7 @@ export const Table = ({ characters }: TableProps) => {
                                     name={card.name}
                                     status={card.status}
                                     specie={card.species}
-                                    flipped={isFlipped}
+                                    flipped={!isFlipped}
                                     onClick={() => handleCardClick(card)}
                                 />
                             );
