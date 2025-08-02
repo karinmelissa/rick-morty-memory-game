@@ -24,7 +24,7 @@ export const Card = ({ image, name, status, specie, flipped, hidden,onClick }: C
           </div>
         </div>
         <div className={styles.back}>
-          <img src={cardLogo} alt="Logo" className={styles.logo} />
+          <img src={cardLogo} alt="Logo" className={styles.logo}  loading="lazy"/>
         </div>
       </div>
     </div>

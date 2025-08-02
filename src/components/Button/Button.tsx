@@ -1,4 +1,3 @@
-// src/components/Button/Button.tsx
 import React from 'react';
 import styles from './Button.module.css';
 
@@ -8,7 +7,8 @@ type ButtonProps = {
   variant?: 'primary' | 'secondary' | 'tertiary';
   onClick?: () => void;
   disabled?: boolean;
-  fullWidth?:boolean;
+  fullWidth?: boolean;
+  loading?: boolean;
 };
 
 export const Button = ({
@@ -18,6 +18,7 @@ export const Button = ({
   onClick,
   disabled = false,
   fullWidth = false,
+  loading = false
 
 }: ButtonProps) => {
   return (
@@ -25,9 +26,13 @@ export const Button = ({
       type={type}
       className={`${styles.button} ${styles[variant]} ${fullWidth && styles.fullWidth} `}
       onClick={onClick}
-      disabled={disabled}
+      disabled={disabled || loading}
     >
-      {children}
+      {loading ? (
+        <span className={styles.spinner} aria-hidden="true" />
+      ) : (
+        children
+      )}
     </button>
   );
 };

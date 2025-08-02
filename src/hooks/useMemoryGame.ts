@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { MemoryCard } from "@/types/character/type";
 
+  function formatTime(seconds: number) {
+  const mm = Math.floor(seconds / 60).toString().padStart(2, '0');
+  const ss = (seconds % 60).toString().padStart(2, '0');
+  return `${mm}:${ss}`;
+}
+
+
 export function useMemoryGame(cards: MemoryCard[]) {
   const [gameStarted, setGameStarted] = useState(false);
   const [turns, setTurns] = useState(0);
@@ -68,6 +75,7 @@ export function useMemoryGame(cards: MemoryCard[]) {
     }
   };
 
+
   useEffect(() => {
     if (timerActive) {
       const interval = window.setInterval(() => setTime((prev) => prev + 1), 1000);
@@ -85,7 +93,7 @@ useEffect(() => {
   }
 }, [matches, cards.length, gameStarted]);
 
-
+const formattedTime = formatTime(time);
 
   return {
     turns,
@@ -97,6 +105,7 @@ useEffect(() => {
     gameFinished,
     gameStarted,
     time,
+   formattedTime,
     startGame,
     resetGame,
     handleCardClick,

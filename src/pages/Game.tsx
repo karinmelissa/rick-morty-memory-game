@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { shuffleCards } from '@/utils/utils';
+import { shuffleCards , preloadImages } from '@/utils/utils';
 import { Header } from '@/components/Header/Header';
 import { fetchRandomCharacters } from '@/services/rickAndMortyApi';
 import { MemoryCard , Character} from '@/types/character/type';
@@ -15,6 +15,10 @@ const loadNewCharacters = async () => {
   const characters = await fetchRandomCharacters(6);
   setOriginalCharacters(characters);
   const shuffled = shuffleCards(characters);
+
+  const imageUrls = shuffled.map((char) => char.image);
+  await preloadImages(imageUrls);
+
   setCards(shuffled);
   setLoading(false);
 };
@@ -33,8 +37,11 @@ const reshuffleCards = () => {
   return (
     <div className='content layout'>
       <Header title="Juego de memoria" />
-      <Table characters={cards} onRepeat={reshuffleCards}
-        onRestart={loadNewCharacters} />
+      <Table 
+        characters={cards} 
+        onRepeat={reshuffleCards}
+        onRestart={loadNewCharacters} 
+        loading={loading}/>
     </div>
   );
 };

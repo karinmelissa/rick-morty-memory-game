@@ -9,15 +9,17 @@ import { useMemoryGame } from '@/hooks/useMemoryGame';
 
 interface TableProps {
   characters: MemoryCard[];
+  loading: boolean;
   onRepeat: () => void;
   onRestart: () => void;
 }
 
-export const Table = ({ characters, onRepeat, onRestart }: TableProps) => {
+export const Table = ({ characters, loading, onRepeat, onRestart }: TableProps) => {
   const {
     turns,
     matches,
     time,
+    formattedTime,
     selectedCards,
     matchedIds,
     removedIds,
@@ -34,15 +36,15 @@ export const Table = ({ characters, onRepeat, onRestart }: TableProps) => {
   return (
     <div className={styles.container}>
       {!gameStarted && !gameFinished && (
-        <div>
+        <div className={styles.gameStart}>
           <h2>¿Listo para jugar?</h2>
-          <Button onClick={startGame}>Iniciar juego</Button>
+          <Button onClick={startGame} loading={loading}>Jugar</Button>
         </div>
       )}
 
       {gameStarted && !gameFinished && (
         <>
-          <Stats time={time} turns={turns} matches={matches} />
+          <Stats time={formattedTime} turns={turns} matches={matches} />
           <Deck
             cards={characters}
             matchedIds={matchedIds}
@@ -58,21 +60,24 @@ export const Table = ({ characters, onRepeat, onRestart }: TableProps) => {
         <> <Confetti width={width} height={height} />
           <div className={styles.gameOver}>
             <h2>¡Felicitaciones!</h2>
-            <p>Terminaste el juego en {turns} turnos</p>
-            <Button onClick={() => {
-              onRepeat(); 
-              startGame();
-            }}>Repetir</Button>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                onRestart();
-                resetGame();
-              }}
-            >
-              Volver al inicio
-            </Button>        </div></>
-
+            <p>Terminaste el juego en {turns} turnos y {formattedTime}</p>
+            <div className={styles.actions}>
+              <Button onClick={() => {
+                onRepeat();
+                startGame();
+              }}>Repetir
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  onRestart();
+                  resetGame();
+                }}
+              >Inicio
+              </Button>
+            </div>        
+          </div>
+          </>
       )}
     </div>
   );

@@ -8,7 +8,19 @@
 }
 
 .hidden{
-  visibility: hidden;
+  animation: shrinkOut 0.5s forwards;
+}
+
+
+@keyframes shrinkOut {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
 }
 
 .inner {
@@ -47,6 +59,7 @@
   object-fit: contain;
   flex-shrink: 0;
   border-radius: 8px;
+    background-color: #f0f0f0; 
 }
 
 .footer {
