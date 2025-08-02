@@ -1,10 +1,14 @@
 .stats {
     display: flex;
-    flex-direction: column;
     gap: 4px;
+    padding: 8px; 
+    align-items:center;
+    justify-content: space-around;
 
     p {
         margin: 0;
         width: fit-content;
+        font-weight: 700;
+        font-size: 1rem;
     }
 }

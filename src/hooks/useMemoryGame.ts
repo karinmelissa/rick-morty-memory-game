@@ -1,12 +1,23 @@
 import { useEffect, useState } from "react";
 import { MemoryCard } from "@/types/character/type";
 
-  function formatTime(seconds: number) {
+function formatTime(seconds: number) {
   const mm = Math.floor(seconds / 60).toString().padStart(2, '0');
   const ss = (seconds % 60).toString().padStart(2, '0');
   return `${mm}:${ss}`;
 }
 
+function formatTimeReadable(seconds: number) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+
+  const minuteLabel = minutes === 1 ? 'minuto' : 'minutos';
+  const secondLabel = remainingSeconds === 1 ? 'segundo' : 'segundos';
+
+  if (minutes === 0) return `${remainingSeconds} ${secondLabel}`;
+  if (remainingSeconds === 0) return `${minutes} ${minuteLabel}`;
+  return `${minutes} ${minuteLabel} y ${remainingSeconds} ${secondLabel}`;
+}
 
 export function useMemoryGame(cards: MemoryCard[]) {
   const [gameStarted, setGameStarted] = useState(false);
@@ -93,7 +104,9 @@ useEffect(() => {
   }
 }, [matches, cards.length, gameStarted]);
 
-const formattedTime = formatTime(time);
+  const formattedTime = formatTime(time);
+  const formattedTimeReadable = formatTimeReadable(time);
+
 
   return {
     turns,
@@ -105,7 +118,8 @@ const formattedTime = formatTime(time);
     gameFinished,
     gameStarted,
     time,
-   formattedTime,
+    formattedTime,
+    formattedTimeReadable,
     startGame,
     resetGame,
     handleCardClick,

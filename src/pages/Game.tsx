@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { shuffleCards, preloadImages } from '@/utils/utils';
-import { Header } from '@/components/Header/Header';
+import { Header } from '@/components/Header';
 import { fetchRandomCharacters } from '@/services/rickAndMortyApi';
 import { MemoryCard, Character } from '@/types/character/type';
 import { Table } from '@/components/Game/Table';

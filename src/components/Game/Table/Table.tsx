@@ -8,6 +8,7 @@ import { Deck } from '@/components/Game/Deck'
 import { Stats } from '../Stats';
 import { useMemoryGame } from '@/hooks/useMemoryGame';
 import { InstructionsSlider } from '../InstructionsSlider';
+import  img  from '@/assets/rick_and_morty_final.png'
 
 interface TableProps {
   characters: MemoryCard[];
@@ -27,6 +28,7 @@ export const Table = ({ characters, onRepeat, onRestart }: TableProps) => {
     gameFinished,
     gameStarted,
     initialReveal,
+    formattedTimeReadable,
     startGame,
     resetGame,
     handleCardClick,
@@ -63,7 +65,8 @@ export const Table = ({ characters, onRepeat, onRestart }: TableProps) => {
         <> <Confetti width={width} height={height} />
           <div className={styles.gameOver}>
             <h2>¡Felicitaciones!</h2>
-            <p>Terminaste el juego en {turns} turnos y {formattedTime}</p>
+            <p>Terminaste el juego en <strong>{turns} turnos </strong>y <strong>{formattedTimeReadable}</strong></p>
+            <img src={img} alt='Rick and Morty' className={styles.img}/>
             <div className={styles.actions}>
               <Button onClick={() => {
                 onRepeat();
