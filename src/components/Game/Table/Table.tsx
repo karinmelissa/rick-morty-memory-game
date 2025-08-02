@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Confetti from 'react-confetti';
 import { useWindowSize } from '@react-hook/window-size';
 import { MemoryCard } from "@/types/character/type";
@@ -6,19 +7,19 @@ import { Button } from '@/components/Button';
 import { Deck } from '@/components/Game/Deck'
 import { Stats } from '../Stats';
 import { useMemoryGame } from '@/hooks/useMemoryGame';
+import { InstructionsSlider } from '../InstructionsSlider';
 
 interface TableProps {
   characters: MemoryCard[];
-  loading: boolean;
   onRepeat: () => void;
   onRestart: () => void;
 }
 
-export const Table = ({ characters, loading, onRepeat, onRestart }: TableProps) => {
+export const Table = ({ characters, onRepeat, onRestart }: TableProps) => {
+  const [tutorialComplete, setTutorialComplete] = useState(false);
   const {
     turns,
     matches,
-    time,
     formattedTime,
     selectedCards,
     matchedIds,
@@ -37,8 +38,10 @@ export const Table = ({ characters, loading, onRepeat, onRestart }: TableProps) 
     <div className={styles.container}>
       {!gameStarted && !gameFinished && (
         <div className={styles.gameStart}>
-          <h2>Hola!</h2>
-          <Button onClick={startGame} loading={loading}>Jugar</Button>
+
+          <h2>Instrucciones</h2>
+          <InstructionsSlider onComplete={() => setTutorialComplete(true)} />
+          <Button onClick={startGame} disabled={!tutorialComplete}>Jugar</Button>
         </div>
       )}
 
@@ -75,9 +78,9 @@ export const Table = ({ characters, loading, onRepeat, onRestart }: TableProps) 
                 }}
               >Inicio
               </Button>
-            </div>        
+            </div>
           </div>
-          </>
+        </>
       )}
     </div>
   );

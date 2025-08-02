@@ -10,7 +10,6 @@ import { useAuth } from '@/auth/useAuth';
 export const Game = () => {
   const [originalCharacters, setOriginalCharacters] = useState<Character[]>([]);
   const [cards, setCards] = useState<MemoryCard[]>([]);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { logout } = useAuth();
 
@@ -23,7 +22,6 @@ export const Game = () => {
   }
 
   const loadNewCharacters = async () => {
-    setLoading(true);
     const characters = await fetchRandomCharacters(6);
     setOriginalCharacters(characters);
     const shuffled = shuffleCards(characters);
@@ -32,7 +30,6 @@ export const Game = () => {
     await preloadImages(imageUrls);
 
     setCards(shuffled);
-    setLoading(false);
   };
 
 
@@ -52,7 +49,7 @@ export const Game = () => {
         characters={cards}
         onRepeat={reshuffleCards}
         onRestart={loadNewCharacters}
-        loading={loading} />
+         />
     </div>
   );
 };

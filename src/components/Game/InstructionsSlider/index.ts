@@ -1,0 +1,1 @@
+export {InstructionsSlider} from './InstructionsSlider';
