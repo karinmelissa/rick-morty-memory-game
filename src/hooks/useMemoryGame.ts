@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { MemoryCard } from "@/types/character/type";
 
 export function useMemoryGame(cards: MemoryCard[]) {
-const [gameStarted, setGameStarted] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
   const [turns, setTurns] = useState(0);
   const [matches, setMatches] = useState(0);
   const [selectedCards, setSelectedCards] = useState<MemoryCard[]>([]);
@@ -22,9 +22,24 @@ const [gameStarted, setGameStarted] = useState(false);
     setRemovedIds([]);
     setInitialReveal(true);
     setGameFinished(false);
+    setTime(0);
     setTimerActive(true);
     setTimeout(() => setInitialReveal(false), 3000);
   };
+
+  const resetGame = () => {
+  setGameStarted(false);
+  setGameFinished(false);
+  setTurns(0);
+  setMatches(0);
+  setSelectedCards([]);
+  setMatchedIds([]);
+  setRemovedIds([]);
+  setInitialReveal(false);
+  setTime(0);
+  setTimerActive(false);
+};
+
 
   const handleCardClick = (card: MemoryCard) => {
     const totalPairs = cards.length / 2;
@@ -60,13 +75,17 @@ const [gameStarted, setGameStarted] = useState(false);
     }
   }, [timerActive]);
 
-  useEffect(() => {
-    const totalPairs = cards.length / 2;
-    if (matches === totalPairs) {
-      setTimerActive(false);
+useEffect(() => {
+  const totalPairs = cards.length / 2;
+  if (gameStarted && matches === totalPairs && totalPairs > 0) {
+    setTimerActive(false);
+    setTimeout(() => {
       setGameFinished(true);
-    }
-  }, [matches]);
+    }, 1000);
+  }
+}, [matches, cards.length, gameStarted]);
+
+
 
   return {
     turns,
@@ -79,6 +98,7 @@ const [gameStarted, setGameStarted] = useState(false);
     gameStarted,
     time,
     startGame,
+    resetGame,
     handleCardClick,
   };
 }
