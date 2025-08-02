@@ -37,7 +37,7 @@ export const Table = ({ characters, loading, onRepeat, onRestart }: TableProps) 
     <div className={styles.container}>
       {!gameStarted && !gameFinished && (
         <div className={styles.gameStart}>
-          <h2>¿Listo para jugar?</h2>
+          <h2>Hola!</h2>
           <Button onClick={startGame} loading={loading}>Jugar</Button>
         </div>
       )}

@@ -1,34 +1,45 @@
 import { useEffect, useState } from 'react';
-import { shuffleCards , preloadImages } from '@/utils/utils';
+import { useNavigate } from 'react-router-dom';
+import { shuffleCards, preloadImages } from '@/utils/utils';
 import { Header } from '@/components/Header/Header';
 import { fetchRandomCharacters } from '@/services/rickAndMortyApi';
-import { MemoryCard , Character} from '@/types/character/type';
+import { MemoryCard, Character } from '@/types/character/type';
 import { Table } from '@/components/Game/Table';
+import { useAuth } from '@/auth/useAuth';
 
 export const Game = () => {
   const [originalCharacters, setOriginalCharacters] = useState<Character[]>([]);
-const [cards, setCards] = useState<MemoryCard[]>([]);
+  const [cards, setCards] = useState<MemoryCard[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
-const loadNewCharacters = async () => {
-  setLoading(true);
-  const characters = await fetchRandomCharacters(6);
-  setOriginalCharacters(characters);
-  const shuffled = shuffleCards(characters);
+  const user = localStorage.getItem('currentUser')
+  let userName
+  if (user) { userName = JSON.parse(user).username }
+  const handleLogOut = () => {
+    logout();
+     navigate('/'); 
+  }
 
-  const imageUrls = shuffled.map((char) => char.image);
-  await preloadImages(imageUrls);
+  const loadNewCharacters = async () => {
+    setLoading(true);
+    const characters = await fetchRandomCharacters(6);
+    setOriginalCharacters(characters);
+    const shuffled = shuffleCards(characters);
 
-  setCards(shuffled);
-  setLoading(false);
-};
+    const imageUrls = shuffled.map((char) => char.image);
+    await preloadImages(imageUrls);
+
+    setCards(shuffled);
+    setLoading(false);
+  };
 
 
-const reshuffleCards = () => {
-  const reshuffled = shuffleCards(originalCharacters);
-  setCards(reshuffled);
-};
-
+  const reshuffleCards = () => {
+    const reshuffled = shuffleCards(originalCharacters);
+    setCards(reshuffled);
+  };
 
   useEffect(() => {
     loadNewCharacters();
@@ -36,12 +47,12 @@ const reshuffleCards = () => {
 
   return (
     <div className='content layout'>
-      <Header title="Juego de memoria" />
-      <Table 
-        characters={cards} 
+      <Header title="Juego de memoria" userName={userName} onLogout={handleLogOut} />
+      <Table
+        characters={cards}
         onRepeat={reshuffleCards}
-        onRestart={loadNewCharacters} 
-        loading={loading}/>
+        onRestart={loadNewCharacters}
+        loading={loading} />
     </div>
   );
 };

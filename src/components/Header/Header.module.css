@@ -1,21 +1,37 @@
-.header{
-    display: flex;
-    flex-direction: column;
-    max-width: 500px;
-    align-items: center;
+.header {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin:8px ;
 }
 
-.logo{
-    max-width: 300px;
+.logo {
+  max-width: 300px;
 }
 
-.badge{
-    background-color: #D8E054;
-    text-align: center;
-    border-radius:999px;
-    font-size: 20px;
-    padding: 8px 16px;
-    width: fit-content;
+.badge {
+  background-color: #D8E054;
+  text-align: center;
+  border-radius: 999px;
+  font-size: 20px;
+  padding: 8px 16px;
+  width: fit-content;
+  margin: auto;
+}
+
+.headerActions {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: bold;
+  color:white;
+
 }
 
 @media (max-width: 600px) {
