@@ -37,7 +37,7 @@ export const InstructionsSlider = ({ onComplete }: InstructionsSliderProps) => {
 
             {step < slides.length - 1 && (
                 <Button variant='tertiary' onClick={handleNext}>
-                    Siguiente
+                    Siguiente 
                 </Button>
             )}
         </div>

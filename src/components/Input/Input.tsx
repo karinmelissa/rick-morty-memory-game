@@ -47,11 +47,17 @@ export const Input = ({
   };
 
   const handleChange = (e: { target: { value: any; }; }) => {
+    setError('')
     const val = e.target.value;
-    const validationError = validate(val);
-    setError(validationError);
-    onChange && onChange(val, validationError);
+    onChange && onChange(val, error);
   };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const val = e.target.value;
+  const validationError = validate(val);
+  setError(validationError);
+  onChange && onChange(val, validationError);
+};
 
 const inputType = type === "password" && showPassword ? "text" : type;
 
@@ -70,6 +76,7 @@ const inputType = type === "password" && showPassword ? "text" : type;
         value={value}
         placeholder={placeholder}
         onChange={handleChange}
+        onBlur={handleBlur}
         className={`${styles.field} ${error? styles.error : ""}`}
       />
        {type === "password" && (
