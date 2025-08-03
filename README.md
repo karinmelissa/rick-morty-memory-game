@@ -1,69 +1,88 @@
-# React + TypeScript + Vite
+# 🧠 Rick & Morty - Juego de Memoria
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este es un juego de memoria temático con personajes de *Rick and Morty*, desarrollado con **React y TypeScript**. La experiencia está optimizada para navegadores modernos y dispositivos móviles, con animaciones suaves, persistencia de datos y una UI Simple y entretenida.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Enfoque de desarrollo
 
-## Expanding the ESLint configuration
+El enfoque fue **componentizar al máximo la UI**, mantener la lógica del juego desacoplada (custom hooks), y garantizar una experiencia visual fluida y responsiva. Se buscó también una estructura escalable que permita extender fácilmente la lógica si se desea en proximas iteraciones (por ejemplo, sumar dificultad, niveles o autenticación real).
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Principios seguidos**:
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Componentes reutilizables (`Card`, `Button`, `Stats`, etc.)
+- Hooks personalizados para lógica (`useMemoryGame`)
+- Separación de lógica de datos (`utils`, `services`)
+- Persistencia ligera (con `localStorage`)
+- Interfaz simple e intuitiva con elementos temáticos
+- Carga anticipada de imágenes para mejorar performance
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## ⚙️ Decisiones técnicas
+
+- **React + TypeScript**: Por tipado estático, autocompletado, y mantenimiento más seguro.
+- **CSS Modules**: Aislamiento de estilos por componente sin colisiones.
+- **Mock de autenticación**: Simula login de usuario sin backend real, útil para pruebas o demos sin servidor.
+- **LocalStorage**: Para guardar de forma simple los usuarios simulados.
+- **Custom Hook (`useMemoryGame`)**: Encapsula la lógica del juego: turns, matches, estado del tiempo, etc.
+- **Preload de imágenes**: Se pre-cargan antes de iniciar para evitar parpadeos o demoras en la animación.
+- **Diseño responsive**: Adaptado para mobile, incluyendo modo landscape.
+
+---
+
+## 🚀 Cómo correr el proyecto
+
+1. Clona el repositorio:
+
+```bash
+git clone https://github.com/karinmelissa/rick-morty-memory-game.git
+cd juego-memoria-rick
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. Instala dependencias 
+```bash
+npm install
 ```
+
+3. Corre el proeycto en desarrollo:
+```bash
+npm run dev
+```
+
+4. Accede desde tu navegador 
+```bash
+http://localhost:5173
+```
+## 💾 Uso de LocalStorage
+
+- **Mock de autenticacion**: Cuando el usuario inicia sesión, los datos se guardan en localStorage bajo una clave como:
+
+```json
+{
+  "currentUser": {
+    "username": "morty_smith",
+    "id": "abc123"
+  },
+  "token": "rickmorty_token_123"
+}
+```
+Esto permite mantener el estado de "autenticado" incluso si el usuario refresca la página.
+
+- **Mock de Users**: Al registrar nuevos usuarios, se guardan en localStorage bajo un objeto:
+
+```json
+{
+  "users":[
+    {"email": "user1@email.com", "username":"User 1", "password":"123456"},
+    {"email": "user2@email.com", "username":"User 2", "password":"123456"},
+  ],
+}
+```
+
+
+## 🎨 Extras
+
+- Confetti de victoria 🎉 con react-confetti.
+- Animaciones en el giro de cartas con CSS3.
+- Slider de instruccione iniciales.
