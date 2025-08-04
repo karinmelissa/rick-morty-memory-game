@@ -37,7 +37,7 @@ El enfoque fue **componentizar al máximo la UI**, mantener la lógica del juego
 
 ```bash
 git clone https://github.com/karinmelissa/rick-morty-memory-game.git
-cd juego-memoria-rick
+cd rick-morty-memory-game
 ```
 
 2. Instala dependencias 
@@ -45,7 +45,7 @@ cd juego-memoria-rick
 npm install
 ```
 
-3. Corre el proeycto en desarrollo:
+3. Corre el proyecto en desarrollo:
 ```bash
 npm run dev
 ```
@@ -80,9 +80,27 @@ Esto permite mantener el estado de "autenticado" incluso si el usuario refresca 
 }
 ```
 
+## 🌐 Deploy
+
+Puedes ver el proyecto funcionando en producción aquí:  
+[https://rick-morty-memory-game-one.vercel.app/](https://rick-morty-memory-game-one.vercel.app/)
+
+
 
 ## 🎨 Extras
 
 - Confetti de victoria 🎉 con react-confetti.
 - Animaciones en el giro de cartas con CSS3.
-- Slider de instruccione iniciales.
+- Slider de instrucciones iniciales.
+
+## 🎮 ¿Cómo se juega?
+
+1. Al iniciar, se muestran las instrucciones en un slider interactivo.
+2. El jugador ve las cartas barajadas por 3 segundos.
+3. Luego, las cartas se voltean y comienza el juego.
+4. El jugador debe seleccionar dos cartas por turno.
+   - ✅ Si coinciden, se eliminan del tablero.
+   - ❌ Si no, se vuelven a ocultar.
+5. El contador de turnos y aciertos se actualiza en cada acción.
+6. Al completar todos los pares, se muestra un mensaje de victoria con animación de confetti.
+
